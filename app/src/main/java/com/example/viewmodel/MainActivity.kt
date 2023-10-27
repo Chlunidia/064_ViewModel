@@ -32,15 +32,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.modifier.modifierLocalMapOf
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.viewmodel.data.DataForm
 import com.example.viewmodel.data.DataSource.jenis
@@ -84,7 +81,7 @@ fun TampilLayout(modifier: Modifier = Modifier){
 fun Tampilan(cobaViewModel: CobaViewModel = viewModel()) {
     var textNama by remember { mutableStateOf("") }
     var textTlp by remember { mutableStateOf("") }
-    var textAlamat by remember { mutableStateOf("") } // New address text variable
+    var textEmail by remember { mutableStateOf("") } // New address text variable
     val context = LocalContext.current
     val dataForm: DataForm
     val uiState by cobaViewModel.uiState.collectAsState()
@@ -114,19 +111,21 @@ fun Tampilan(cobaViewModel: CobaViewModel = viewModel()) {
         onValueChange = { textTlp = it }
     )
     OutlinedTextField(
-        value = textAlamat, // New address text field
+        value = textEmail,
         singleLine = true,
         shape = MaterialTheme.shapes.large,
         modifier = Modifier.fillMaxWidth(),
         label = {
-            Text(text = "Alamat")
+            Text(text = "Email")
         },
-        onValueChange = { textAlamat = it }
+        onValueChange = { textEmail = it }
     )
+    Text(text = "Jenis Kelamin :")
     SelectJK(
         options = jenis.map { id -> context.resources.getString(id) },
         onSelectionChanged = { cobaViewModel.setJenisK(it) }
     )
+    Text(text = "Status :")
     Button(
         modifier = Modifier.fillMaxWidth(),
         onClick = { cobaViewModel.insertData(textNama, textTlp, dataForm.sex) }
@@ -138,7 +137,7 @@ fun Tampilan(cobaViewModel: CobaViewModel = viewModel()) {
         namanya = cobaViewModel.namaUsr,
         telponnya = cobaViewModel.noTlp,
         jenisnya = cobaViewModel.jenisKl,
-        alamatnya = textAlamat
+        alamatnya = textEmail
     )
 }
 
@@ -161,7 +160,7 @@ fun TextResult(namanya: String, telponnya: String, jenisnya: String, alamatnya: 
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
         )
         Text(
-            text = "Alamat : " + alamatnya,
+            text = "Email : " + alamatnya,
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
         )
     }
@@ -173,7 +172,7 @@ fun SelectJK(
     onSelectionChanged: (String) -> Unit = {}
 ) {
     var selectedValue by rememberSaveable { mutableStateOf("") }
-    Column (
+    Row (
         modifier = Modifier
             .padding(10.dp)
     ){
