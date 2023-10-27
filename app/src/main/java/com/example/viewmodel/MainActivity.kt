@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.viewmodel.data.DataForm
 import com.example.viewmodel.data.DataSource.jenis
+import com.example.viewmodel.data.DataSource.status
 import com.example.viewmodel.ui.theme.ViewModelTheme
 
 class MainActivity : ComponentActivity() {
@@ -126,6 +127,10 @@ fun Tampilan(cobaViewModel: CobaViewModel = viewModel()) {
         onSelectionChanged = { cobaViewModel.setJenisK(it) }
     )
     Text(text = "Status :")
+    SelectStatus(
+        options = status.map { id -> context.resources.getString(id) },
+        onSelectionChanged = { cobaViewModel.setJenisK(it) }
+    )
     Button(
         modifier = Modifier.fillMaxWidth(),
         onClick = { cobaViewModel.insertData(textNama, textTlp, dataForm.sex) }
