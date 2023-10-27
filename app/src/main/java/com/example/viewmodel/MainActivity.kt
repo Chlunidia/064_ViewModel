@@ -82,7 +82,8 @@ fun TampilLayout(modifier: Modifier = Modifier){
 fun Tampilan(cobaViewModel: CobaViewModel = viewModel()) {
     var textNama by remember { mutableStateOf("") }
     var textTlp by remember { mutableStateOf("") }
-    var textEmail by remember { mutableStateOf("") } // New address text variable
+    var textEmail by remember { mutableStateOf("") }
+    var textAlamat by remember { mutableStateOf("") }
     val context = LocalContext.current
     val dataForm: DataForm
     val uiState by cobaViewModel.uiState.collectAsState()
@@ -129,11 +130,21 @@ fun Tampilan(cobaViewModel: CobaViewModel = viewModel()) {
     Text(text = "Status :")
     SelectStatus(
         options = status.map { id -> context.resources.getString(id) },
-        onSelectionChanged = { cobaViewModel.setJenisK(it) }
+        onSelectionChanged = { cobaViewModel.setStatus(it) }
+    )
+    OutlinedTextField(
+        value = textAlamat,
+        singleLine = true,
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier.fillMaxWidth(),
+        label = {
+            Text(text = "Alamat")
+        },
+        onValueChange = { textAlamat = it }
     )
     Button(
         modifier = Modifier.fillMaxWidth(),
-        onClick = { cobaViewModel.insertData(textNama, textTlp, dataForm.sex) }
+        onClick = { cobaViewModel.insertData(textNama, textTlp, textEmail, dataForm.sex, dataForm.stat, textAlamat) }
     ) {
         Text(text = stringResource(R.string.submit), fontSize = 16.sp)
     }
@@ -142,30 +153,32 @@ fun Tampilan(cobaViewModel: CobaViewModel = viewModel()) {
         namanya = cobaViewModel.namaUsr,
         telponnya = cobaViewModel.noTlp,
         jenisnya = cobaViewModel.jenisKl,
-        alamatnya = textEmail
+        emailnya = cobaViewModel.eMail,
+        alamatnya = cobaViewModel.alamatU,
+        statusnya = cobaViewModel.statusM
     )
 }
 
 @Composable
-fun TextResult(namanya: String, telponnya: String, jenisnya: String, alamatnya: String) {
+fun TextResult(namanya: String, telponnya: String, jenisnya: String, emailnya: String, statusnya: String, alamatnya: String) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
         modifier = Modifier.fillMaxWidth()
     ) {
         Text(
-            text = "Nama : " + namanya,
-            modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
-        )
-        Text(
-            text = "Nomor telepon : " + telponnya,
-            modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
-        )
-        Text(
             text = "Jenis kelamin : " + jenisnya,
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
         )
         Text(
-            text = "Email : " + alamatnya,
+            text = "Status : " + statusnya,
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
+        )
+        Text(
+            text = "Alamat : " + alamatnya,
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
+        )
+        Text(
+            text = "Email : " + emailnya,
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
         )
     }
