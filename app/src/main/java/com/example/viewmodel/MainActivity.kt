@@ -201,6 +201,41 @@ fun SelectJK(
     }
 }
 
+@Composable
+fun SelectStatus(
+    options: List<String>,
+    onSelectionChanged: (String) -> Unit = {}
+) {
+    var selectedValue by rememberSaveable { mutableStateOf("") }
+    Row (
+        modifier = Modifier
+            .padding(10.dp)
+    ){
+        options.forEach{
+                item ->
+            Row(
+                modifier = Modifier
+                    .selectable(
+                        selected = selectedValue == item,
+                        onClick = {
+                            selectedValue = item
+                            onSelectionChanged(item)
+                        }
+                    ),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                RadioButton(selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectionChanged(item)
+                    }
+                )
+                Text(item)
+            }
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
