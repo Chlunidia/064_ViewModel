@@ -4,5 +4,6 @@
     <string name="perempuan">Perempuan</string>
     <string name="submit">Register</string>
     <string name="married">Menikah</string>
+    <string name="create">Create Your Account</string>
     <string name="havent">Belum menikah</string>
 </resources>

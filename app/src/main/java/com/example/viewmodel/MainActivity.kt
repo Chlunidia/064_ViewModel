@@ -68,9 +68,9 @@ fun TampilLayout(modifier: Modifier = Modifier){
         elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
     ){
         Column (
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+            verticalArrangement = Arrangement.spacedBy(5.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(20.dp)
+            modifier = Modifier.padding(15.dp)
         ){
             Tampilan()
         }
@@ -88,7 +88,9 @@ fun Tampilan(cobaViewModel: CobaViewModel = viewModel()) {
     val dataForm: DataForm
     val uiState by cobaViewModel.uiState.collectAsState()
     dataForm = uiState;
-
+    Text(
+        text = "Create Your Account"
+    )
     OutlinedTextField(
         value = textNama,
         singleLine = true,
@@ -122,7 +124,11 @@ fun Tampilan(cobaViewModel: CobaViewModel = viewModel()) {
         },
         onValueChange = { textEmail = it }
     )
-    Text(text = "Jenis Kelamin :")
+    Text(
+        modifier = Modifier
+            .padding(10.dp),
+        text = "Jenis Kelamin :"
+    )
     SelectJK(
         options = jenis.map { id -> context.resources.getString(id) },
         onSelectionChanged = { cobaViewModel.setJenisK(it) }
@@ -148,7 +154,7 @@ fun Tampilan(cobaViewModel: CobaViewModel = viewModel()) {
     ) {
         Text(text = stringResource(R.string.submit), fontSize = 16.sp)
     }
-    Spacer(modifier = Modifier.height(100.dp))
+    Spacer(modifier = Modifier.height(10.dp))
     TextResult(
         namanya = cobaViewModel.namaUsr,
         telponnya = cobaViewModel.noTlp,
