@@ -3,6 +3,7 @@ package com.example.viewmodel
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,8 +17,10 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
@@ -67,9 +70,16 @@ fun TampilLayout(modifier: Modifier = Modifier){
         modifier = modifier,
         elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
     ){
+        Row (
+            Modifier.height(60.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ){
+
+            Text(text = "Register")
+        }
+        Divider()
         Column (
-            verticalArrangement = Arrangement.spacedBy(5.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(2.dp),
             modifier = Modifier.padding(15.dp)
         ){
             Tampilan()
